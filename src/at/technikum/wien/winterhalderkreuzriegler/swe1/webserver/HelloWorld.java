@@ -1,0 +1,13 @@
+package at.technikum.wien.winterhalderkreuzriegler.swe1.webserver;
+
+public class HelloWorld {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		System.out.println("Hello World!");
+
+	}
+
+}
