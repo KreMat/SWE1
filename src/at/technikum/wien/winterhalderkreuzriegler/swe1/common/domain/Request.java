@@ -10,7 +10,7 @@ public interface Request {
 	
 	public int getContentLength();
 	
-	public Uri getUrl();
+	public Uri getUri();
 	
 	public InputStream getBody();
 }
