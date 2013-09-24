@@ -20,9 +20,9 @@ public interface Response {
 	public OutputStream getBody();
 
 	public void setBody(OutputStream o);
-	
+
 	public Map<String, String> getHeaders();
-	
-	public void setHeaders(Map<String,String> headers);
+
+	public void setHeaders(Map<String, String> headers);
 
 }

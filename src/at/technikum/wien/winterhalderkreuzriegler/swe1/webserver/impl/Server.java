@@ -13,10 +13,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import sun.font.EAttribute;
+
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.Request;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.RequestImpl;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.Response;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.ResponseImpl;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.Uri;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.UriImpl;
 
 public class Server {
 
@@ -26,7 +30,7 @@ public class Server {
 	public static void main(String[] args) throws IOException {
 		final ExecutorService pool;
 		final ServerSocket serverSocket;
-		int port = 8080;
+		int port = 8088;
 		String var = "C";
 		String zusatz;
 		if (args.length > 0)
@@ -140,12 +144,12 @@ class Handler implements Runnable { // oder 'extends Thread'
 	}
 
 	public void run() {
-		//StringBuffer sb = new StringBuffer();
+		// StringBuffer sb = new StringBuffer();
 		PrintWriter out = null;
 		String line;
 		int lineNumber = 1;
-		RequestImpl request = new RequestImpl();
-		ResponseImpl response = new ResponseImpl();
+		Request request = new RequestImpl();
+		Response response = new ResponseImpl();
 
 		try {
 			// read and service request on client
@@ -157,10 +161,46 @@ class Handler implements Runnable { // oder 'extends Thread'
 					new InputStreamReader(client.getInputStream()));
 
 			while ((line = bufferedReader.readLine()) != null) {
-				request.parseLine(line, lineNumber);
-				//System.out.println(line);
+
+				if (line.length() == 0) {
+					// zwischen Header und Body oder End of Header
+					// request.setBody(bufferedReader);
+
+					// ModulManager aufrufen
+				} else {
+
+					if (lineNumber == 1) {
+						// parse first Line
+						String[] requestLine = line.split("/");
+
+						request.setMethod(requestLine[0].trim());
+
+						String[] uriProtocol = requestLine[1].split(" ");
+
+						Uri uri = new UriImpl();
+						uri.setPath(uriProtocol[0]);
+						uri.setProtocol(uriProtocol[1]);
+						request.addToHeader("version", requestLine[2].trim());
+
+					} else {
+						String[] headerArgs = line.split(" ", 2);
+						// headers Map befuellen
+						request.addToHeader(headerArgs[0], headerArgs[1]);
+
+						if (headerArgs[0] == "Content-Length:") {
+							request.setContentLength(Integer
+									.parseInt(headerArgs[1]));
+						}
+
+						if (headerArgs[0] == "Content-Type:") {
+							request.setContentType(headerArgs[1]);
+						}
+					}
+				}
 				lineNumber++;
 			}
+			
+			System.out.println(request);
 
 			// char[] buffer = new char[100];
 			// int anzahlZeichen = bufferedReader.read(buffer, 0, 100); //
