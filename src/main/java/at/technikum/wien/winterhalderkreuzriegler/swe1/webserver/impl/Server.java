@@ -13,14 +13,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import sun.font.EAttribute;
-
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.Request;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.RequestImpl;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.Response;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.ResponseImpl;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.Uri;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.UriImpl;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.RequestImpl;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.ResponseImpl;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.UriImpl;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Request;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
 
 public class Server {
 

@@ -1,4 +1,6 @@
-package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain;
+package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl;
+
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
 
 public class UriImpl implements Uri {
 	

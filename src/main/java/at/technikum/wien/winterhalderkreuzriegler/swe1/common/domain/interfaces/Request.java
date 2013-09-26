@@ -1,9 +1,11 @@
-package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain;
+package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces;
 
 import java.io.InputStream;
 import java.util.Map;
 
+
 public interface Request {
+	
 	public String getMethod();
 	
 	public void setMethod(String method);

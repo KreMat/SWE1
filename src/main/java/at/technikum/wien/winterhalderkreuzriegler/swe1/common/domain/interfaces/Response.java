@@ -1,7 +1,9 @@
-package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain;
+package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces;
 
 import java.io.OutputStream;
 import java.util.Map;
+
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.StatusCode;
 
 public interface Response {
 

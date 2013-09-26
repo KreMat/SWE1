@@ -1,4 +1,4 @@
-package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain;
+package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces;
 
 public interface Uri {
 	public int getPort();
