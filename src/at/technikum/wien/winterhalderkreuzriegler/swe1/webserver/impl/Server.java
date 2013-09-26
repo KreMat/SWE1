@@ -13,12 +13,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import sun.font.EAttribute;
-
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.HTTPRequest;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.HTTPResponse;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.Request;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.RequestImpl;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.Response;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.ResponseImpl;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.Uri;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.UriImpl;
 
@@ -119,8 +117,8 @@ class NetworkService implements Runnable { // oder extends Thread
 			System.out.println("--- Ende NetworkService(pool.shutdown)");
 			pool.shutdown(); // keine Annahme von neuen Anforderungen
 			try {
-				// warte maximal 4 Sekunden auf Beendigung aller Anforderungen
-				pool.awaitTermination(4L, TimeUnit.SECONDS);
+				// warte maximal 1 Sekunden auf Beendigung aller Anforderungen
+				pool.awaitTermination(1L, TimeUnit.SECONDS);
 				if (!serverSocket.isClosed()) {
 					System.out
 							.println("--- Ende NetworkService:ServerSocket close");
@@ -148,8 +146,8 @@ class Handler implements Runnable { // oder 'extends Thread'
 		PrintWriter out = null;
 		String line;
 		int lineNumber = 1;
-		Request request = new RequestImpl();
-		Response response = new ResponseImpl();
+		Request request = new HTTPRequest();
+		Response response = new HTTPResponse();
 
 		try {
 			// read and service request on client
@@ -164,35 +162,32 @@ class Handler implements Runnable { // oder 'extends Thread'
 
 				if (line.length() == 0) {
 					// zwischen Header und Body oder End of Header
-					// request.setBody(bufferedReader);
-
+					 request.setBody(client.getInputStream());
+					 System.out.println("blabla");
 					// ModulManager aufrufen
 				} else {
 
 					if (lineNumber == 1) {
 						// parse first Line
-						String[] requestLine = line.split("/");
+						String[] requestLine = line.split(" ");
 
 						request.setMethod(requestLine[0].trim());
 
-						String[] uriProtocol = requestLine[1].split(" ");
-
 						Uri uri = new UriImpl();
-						uri.setPath(uriProtocol[0]);
-						uri.setProtocol(uriProtocol[1]);
-						request.addToHeader("version", requestLine[2].trim());
+						uri.setPath(requestLine[1].trim());
+						uri.setProtocol(requestLine[2].trim());
 
 					} else {
-						String[] headerArgs = line.split(" ", 2);
+						String[] headerArgs = line.split(": ", 2);
 						// headers Map befuellen
 						request.addToHeader(headerArgs[0], headerArgs[1]);
 
-						if (headerArgs[0] == "Content-Length:") {
+						if (headerArgs[0] == "Content-Length") {
 							request.setContentLength(Integer
 									.parseInt(headerArgs[1]));
 						}
 
-						if (headerArgs[0] == "Content-Type:") {
+						if (headerArgs[0] == "Content-Type") {
 							request.setContentType(headerArgs[1]);
 						}
 					}
@@ -201,6 +196,14 @@ class Handler implements Runnable { // oder 'extends Thread'
 			}
 			
 			System.out.println(request);
+			
+			BufferedReader bufferedReader1 = new BufferedReader(
+					new InputStreamReader(request.getBody()));
+
+			while ((line = bufferedReader1.readLine()) != null) {
+				System.out.println(line);
+				
+			}
 
 			// char[] buffer = new char[100];
 			// int anzahlZeichen = bufferedReader.read(buffer, 0, 100); //

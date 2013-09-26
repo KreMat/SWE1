@@ -3,7 +3,7 @@ package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain;
 import java.io.OutputStream;
 import java.util.Map;
 
-public class ResponseImpl implements Response {
+public class HTTPResponse implements Response {
 	
 	private StatusCode statusCode;
 	private int contentLength;

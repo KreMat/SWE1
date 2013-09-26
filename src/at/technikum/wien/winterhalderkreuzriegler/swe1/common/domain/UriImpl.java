@@ -1,5 +1,7 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain;
 
+import java.util.Map;
+
 public class UriImpl implements Uri {
 	
 	private int port;
@@ -46,6 +48,21 @@ public class UriImpl implements Uri {
 	@Override
 	public void setPath(String path) {
 		this.path = path;
+	}
+	
+	@Override
+	public String toString(){
+		StringBuilder out = new StringBuilder();
+		out.append("port: " + port);
+		out.append("\n");
+		out.append("protocol: " + protocol);
+		out.append("\n");
+		out.append("host: " + host);
+		out.append("\n");
+		out.append("path: " + path);
+		out.append("\n");
+		
+		return out.toString();
 	}
 
 }

@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestImpl implements Request {
+public class HTTPRequest implements Request {
 	
 	private String method;
 	private Map<String, String> headers;
@@ -13,7 +13,7 @@ public class RequestImpl implements Request {
 	private Uri uri;
 	private InputStream body;
 	
-	public RequestImpl(){
+	public HTTPRequest(){
 		headers = new HashMap<String, String>();
 	}
 	
@@ -84,15 +84,17 @@ public class RequestImpl implements Request {
 	public String toString(){
 		StringBuilder out = new StringBuilder();
 		out.append("method: "+method);
+		out.append("\n");
 		out.append("contentType: "+contentType);
+		out.append("\n");
 		out.append("contentLength: "+contentLength);
-		//out.append("uri-Path: "+uri.getPath());
-		//out.append("uri-Procotol: "+uri.getProtocol());
-		out.append("method: "+method);
-		out.append("method: "+method);
-		
+		out.append("\n");
+		if(uri != null){
+			out.append(uri.toString());
+		}
 		for(Map.Entry<String, String> e : headers.entrySet()){
-			out.append(e.getKey() + " " + e.getValue());
+			out.append(e.getKey() + ": " + e.getValue());
+			out.append("\n");
 		}
 		
 		return out.toString();
