@@ -13,8 +13,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.HTTPRequest;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.HTTPResponse;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.HTTPRequest;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.HTTPResponse;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.UriImpl;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Request;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
