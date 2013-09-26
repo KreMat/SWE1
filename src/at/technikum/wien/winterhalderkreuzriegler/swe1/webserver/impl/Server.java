@@ -15,10 +15,11 @@ import java.util.concurrent.TimeUnit;
 
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.HTTPRequest;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.HTTPResponse;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.Request;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.Response;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.Uri;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.UriImpl;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.UriImpl;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Request;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
+
 
 public class Server {
 

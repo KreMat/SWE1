@@ -2,13 +2,10 @@ package at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces;
 
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Request;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
 
-public interface Pluggable {
-
-	public void start();
-
-	public void stop();
+public interface PluginManager {
 	
-	public Response request(Request r);
+	public Response excecuteRequest(Uri uri, Request request);
 
 }

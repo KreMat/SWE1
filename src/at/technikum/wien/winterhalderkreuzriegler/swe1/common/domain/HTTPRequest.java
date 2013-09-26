@@ -4,6 +4,9 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Request;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
+
 public class HTTPRequest implements Request {
 	
 	private String method;

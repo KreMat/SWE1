@@ -3,6 +3,9 @@ package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain;
 import java.io.OutputStream;
 import java.util.Map;
 
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.StatusCode;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
+
 public class HTTPResponse implements Response {
 	
 	private StatusCode statusCode;
