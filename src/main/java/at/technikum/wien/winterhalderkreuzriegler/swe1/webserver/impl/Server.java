@@ -20,7 +20,6 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
 
-
 public class Server {
 
 	/**
@@ -110,7 +109,8 @@ class NetworkService implements Runnable { // oder extends Thread
 
 				// starte den Handler-Thread zur Realisierung der
 				// Client-Anforderung
-				pool.execute(new Handler(serverSocket, cs));
+				// pool.execute(new Handler(serverSocket, cs));
+				new Handler(serverSocket, cs).run();
 			}
 		} catch (IOException ex) {
 			System.out.println("--- Interrupt NetworkService-run");
@@ -163,9 +163,10 @@ class Handler implements Runnable { // oder 'extends Thread'
 
 				if (line.length() == 0) {
 					// zwischen Header und Body oder End of Header
-					 request.setBody(client.getInputStream());
-					 System.out.println("blabla");
+					request.setBody(client.getInputStream());
+					System.out.println("blabla");
 					// ModulManager aufrufen
+					break;
 				} else {
 
 					if (lineNumber == 1) {
@@ -195,15 +196,15 @@ class Handler implements Runnable { // oder 'extends Thread'
 				}
 				lineNumber++;
 			}
-			
+
 			System.out.println(request);
-			
+
 			BufferedReader bufferedReader1 = new BufferedReader(
 					new InputStreamReader(request.getBody()));
 
 			while ((line = bufferedReader1.readLine()) != null) {
 				System.out.println(line);
-				
+
 			}
 
 			// char[] buffer = new char[100];

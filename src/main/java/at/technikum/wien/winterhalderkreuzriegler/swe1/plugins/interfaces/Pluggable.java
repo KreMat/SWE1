@@ -5,10 +5,6 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.
 
 public interface Pluggable {
 
-	public void start();
-
-	public void stop();
-	
 	public Response request(Request r);
 
 }

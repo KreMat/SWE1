@@ -44,6 +44,10 @@ public class PluginLoader {
 	private static URL[] fileArrayToURLArray(File[] files)
 			throws MalformedURLException {
 
+		if (files == null) {
+			return new URL[0];
+		}
+
 		URL[] urls = new URL[files.length];
 		for (int i = 0; i < files.length; i++) {
 			urls[i] = files[i].toURI().toURL();
@@ -53,6 +57,10 @@ public class PluginLoader {
 
 	private static List<Class<Pluggable>> extractClassesFromJARs(File[] jars,
 			ClassLoader cl) throws IOException {
+
+		if (jars == null) {
+			return new ArrayList<Class<Pluggable>>();
+		}
 
 		List<Class<Pluggable>> classes = new ArrayList<Class<Pluggable>>();
 		for (File jar : jars) {
@@ -102,8 +110,9 @@ public class PluginLoader {
 		Map<String, Pluggable> plugs = new HashMap<String, Pluggable>();
 		for (Class<Pluggable> plug : pluggables) {
 			try {
-				if (plugins.containsKey(plug.getName())) {
-					plugs.put(plugins.get(plug.getName()), plug.newInstance());
+				if (plugins.containsKey(plug.getSimpleName())) {
+					plugs.put(plugins.get(plug.getSimpleName()),
+							plug.newInstance());
 				}
 			} catch (InstantiationException e) {
 				System.err.println("Can't instantiate plugin: "

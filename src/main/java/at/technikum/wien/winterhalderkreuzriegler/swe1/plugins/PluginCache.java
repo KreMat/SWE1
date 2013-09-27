@@ -30,9 +30,11 @@ public class PluginCache {
 					WebserverConstants.DEFAULT_PLUGIN_DIR_PATH);
 			Map<String, String> plugins = new HashMap<String, String>();
 			for (Entry<Object, Object> prop : properties.entrySet()) {
-				System.out.println(prop.getKey() + " - " + prop.getValue());
-				plugins.put(prop.getKey().toString(), prop.getValue()
-						.toString());
+				if (!WebserverConstants.PLUGIN_DIR_KEY.equals(prop.getKey()
+						.toString())) {
+					plugins.put(prop.getKey().toString(), prop.getValue()
+							.toString());
+				}
 			}
 			Map<String, Pluggable> loadedPlugins = PluginLoader.loadPlugins(
 					new File(pluginDirPath), plugins);
