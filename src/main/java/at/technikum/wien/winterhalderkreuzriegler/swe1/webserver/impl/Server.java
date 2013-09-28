@@ -2,6 +2,7 @@ package at.technikum.wien.winterhalderkreuzriegler.swe1.webserver.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -158,6 +159,7 @@ class Handler implements Runnable { // oder 'extends Thread'
 			int lineNumber = 1;
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
+				// System.out.println(line);
 
 				if (line.length() == 0) {
 					// zwischen Header und Body oder End of Header
@@ -206,12 +208,21 @@ class Handler implements Runnable { // oder 'extends Thread'
 				lineNumber++;
 			}
 
+			// System.out.println(request);
+			// System.out.println(uri);
+
 			PluginManager manager = new PluginManagerImpl();
 			Response response = manager.excecuteRequest(uri, request);
 
-			out.println(uri.getProtocol().name() + "/"
-					+ uri.getVersion().getVersion() + " "
-					+ response.getStatusCode().getCode() + " OK");
+			if (uri != null && uri.getProtocol() != null
+					&& response.getStatusCode() != null) {
+				out.println(uri.getProtocol().name()
+						+ (uri.getVersion() != null ? "/"
+								+ uri.getVersion().getVersion() : "") + " "
+						+ response.getStatusCode().getCode() + " OK");
+			} else {
+				out.println("HTTP/1.1 404 NOK");
+			}
 			out.println("Content-Type: " + response.getContentType());
 			out.println("Content-Length: " + response.getContentLength());
 			for (Entry<String, String> entry : response.getHeaders().entrySet()) {
@@ -220,16 +231,14 @@ class Handler implements Runnable { // oder 'extends Thread'
 
 			out.println();
 
-			if(response.getBody() != null){
-				
-			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					response.getBody()));
+			if (response.getBody() != null) {
 
-			String outline;
-			while ((outline = reader.readLine()) != null) {
-				out.println(outline);
-			}
+				InputStream in = response.getBody();
+				byte[] buffer = new byte[1024];
+				int len;
+				while ((len = in.read(buffer)) != -1) {
+					client.getOutputStream().write(buffer, 0, len);
+				}
 			}
 		} catch (IOException e) {
 			System.out.println("IOException, Handler-run");
