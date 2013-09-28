@@ -1,17 +1,17 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl;
 
-import java.io.OutputStream;
+import java.io.InputStream;
 import java.util.Map;
 
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.StatusCode;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
 
 public class HTTPResponse implements Response {
-	
+
 	private StatusCode statusCode;
-	private int contentLength;
+	private Long contentLength;
 	private String contentType;
-	private OutputStream body;
+	private InputStream body;
 	private Map<String, String> headers;
 
 	@Override
@@ -25,12 +25,12 @@ public class HTTPResponse implements Response {
 	}
 
 	@Override
-	public int getContentLength() {
+	public Long getContentLength() {
 		return contentLength;
 	}
 
 	@Override
-	public void setContentLength(int length) {
+	public void setContentLength(long length) {
 		this.contentLength = length;
 	}
 
@@ -45,13 +45,13 @@ public class HTTPResponse implements Response {
 	}
 
 	@Override
-	public OutputStream getBody() {
+	public InputStream getBody() {
 		return body;
 	}
 
 	@Override
-	public void setBody(OutputStream o) {
-		this.body = o;
+	public void setBody(InputStream body) {
+		this.body = body;
 	}
 
 	@Override
@@ -63,10 +63,10 @@ public class HTTPResponse implements Response {
 	public void setHeaders(Map<String, String> headers) {
 		this.headers = headers;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		StringBuilder out = new StringBuilder();
-		
+
 		return out.toString();
 	}
 

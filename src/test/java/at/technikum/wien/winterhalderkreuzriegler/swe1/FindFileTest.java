@@ -12,6 +12,9 @@ public class FindFileTest {
 
 		File f = new File("src/test/resources/plugins/");
 		Assert.assertTrue("Kein Directory", f.isDirectory());
+		
+		f = new File("www");
+		Assert.assertTrue("Kein Directory", f.isDirectory());
 	}
 
 }

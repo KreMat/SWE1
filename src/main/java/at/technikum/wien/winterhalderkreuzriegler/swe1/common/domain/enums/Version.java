@@ -9,13 +9,17 @@ public enum Version {
 
 	private String version;
 
-	public static Version getVersion(String stringVersion) {
+	public static Version getByVersionString(String stringVersion) {
 		for (Version v : Version.values()) {
 			if (stringVersion.equals(v.version)) {
 				return v;
 			}
 		}
 		return null;
+	}
+
+	public String getVersion() {
+		return version;
 	}
 
 }

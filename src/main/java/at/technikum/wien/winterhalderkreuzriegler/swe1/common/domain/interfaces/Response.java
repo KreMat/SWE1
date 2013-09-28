@@ -1,6 +1,6 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces;
 
-import java.io.OutputStream;
+import java.io.InputStream;
 import java.util.Map;
 
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.StatusCode;
@@ -11,17 +11,17 @@ public interface Response {
 
 	public void setStatusCode(StatusCode code);
 
-	public int getContentLength();
+	public Long getContentLength();
 
-	public void setContentLength(int length);
+	public void setContentLength(long length);
 
 	public String getContentType();
 
 	public void setContentType(String type);
 
-	public OutputStream getBody();
+	public InputStream getBody();
 
-	public void setBody(OutputStream o);
+	public void setBody(InputStream o);
 
 	public Map<String, String> getHeaders();
 

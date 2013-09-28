@@ -6,9 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -17,11 +15,12 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Metho
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Protocol;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Version;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.HTTPRequest;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.HTTPResponse;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.UriImpl;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Request;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.impl.PluginManagerImpl;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.PluginManager;
 
 public class Server {
 
@@ -112,7 +111,7 @@ class NetworkService implements Runnable { // oder extends Thread
 
 				// starte den Handler-Thread zur Realisierung der
 				// Client-Anforderung
-				pool.execute(new Handler(serverSocket, cs));
+				pool.execute(new Handler(cs));
 			}
 		} catch (IOException ex) {
 			System.out.println("--- Interrupt NetworkService-run");
@@ -137,37 +136,32 @@ class NetworkService implements Runnable { // oder extends Thread
 // Thread bzw. Runnable zur Realisierung der Client-Anforderungen
 class Handler implements Runnable { // oder 'extends Thread'
 	private final Socket client;
-	private final ServerSocket serverSocket;
 
-	Handler(ServerSocket serverSocket, Socket client) { // Server/Client-Socket
+	Handler(Socket client) { // Server/Client-Socket
 		this.client = client;
-		this.serverSocket = serverSocket;
 	}
 
 	public void run() {
-		// StringBuffer sb = new StringBuffer();
-		PrintWriter out = null;
-		String line;
-		int lineNumber = 1;
-		Request request = new HTTPRequest();
-		Uri uri = new UriImpl();
-		Response response = new HTTPResponse();
 
 		try {
-			// read and service request on client
+
 			System.out.println("running service, " + Thread.currentThread());
 
-			out = new PrintWriter(client.getOutputStream(), true);
+			PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 
 			BufferedReader bufferedReader = new BufferedReader(
 					new InputStreamReader(client.getInputStream()));
 
+			Request request = new HTTPRequest();
+			Uri uri = new UriImpl();
+
+			int lineNumber = 1;
+			String line;
 			while ((line = bufferedReader.readLine()) != null) {
 
 				if (line.length() == 0) {
 					// zwischen Header und Body oder End of Header
 					request.setBody(client.getInputStream());
-					// ModulManager aufrufen
 					break;
 				} else {
 
@@ -184,7 +178,8 @@ class Handler implements Runnable { // oder 'extends Thread'
 						Protocol p = Protocol.valueOf(splittetProtocol[0]);
 						uri.setProtocol(p);
 
-						Version v = Version.getVersion(splittetProtocol[1]);
+						Version v = Version
+								.getByVersionString(splittetProtocol[1]);
 						uri.setVersion(v);
 
 					} else {
@@ -211,39 +206,35 @@ class Handler implements Runnable { // oder 'extends Thread'
 				lineNumber++;
 			}
 
-			System.out.println(request);
-			System.out.println(uri);
+			PluginManager manager = new PluginManagerImpl();
+			Response response = manager.excecuteRequest(uri, request);
 
-			// char[] buffer = new char[100];
-			// int anzahlZeichen = bufferedReader.read(buffer, 0, 100); //
-			// blockiert
-			// // bis
-			// // Nachricht
-			// // empfangen
-			// String nachricht = new String(buffer, 0, anzahlZeichen);
-			// String[] werte = nachricht.split("\\s"); // Trennzeichen:
-			// whitespace
-			// if (werte[0].compareTo("Exit") == 0) {
-			// out.println("Server ended");
-			// if (!serverSocket.isClosed()) {
-			// System.out.println("--- Ende Handler:ServerSocket close");
-			// try {
-			// serverSocket.close();
-			// } catch (IOException e) {
-			// }
-			// }
-			// } else { // normale Client-Anforderung
-			// for (int i = 0; i < werte.length; i++) {
-			// String rt = getWday(werte[i]); // ermittle den Wochentag
-			// sb.append(rt + "\n");
-			// //System.out.println(werte[i]);
-			// }
-			// sb.deleteCharAt(sb.length() - 1);
-			// }
+			out.println(uri.getProtocol().name() + "/"
+					+ uri.getVersion().getVersion() + " "
+					+ response.getStatusCode().getCode() + " OK");
+			out.println("Content-Type: " + response.getContentType());
+			out.println("Content-Length: " + response.getContentLength());
+			for (Entry<String, String> entry : response.getHeaders().entrySet()) {
+				out.println(entry.getKey() + ": " + entry.getValue());
+			}
+
+			out.println();
+
+			if(response.getBody() != null){
+				
+			
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					response.getBody()));
+
+			String outline;
+			while ((outline = reader.readLine()) != null) {
+				out.println(outline);
+			}
+			}
 		} catch (IOException e) {
 			System.out.println("IOException, Handler-run");
 		} finally {
-			out.println(response); // Rückgabe Ergebnis an den Client
+			// out.println(response); // Rückgabe Ergebnis an den Client
 			if (!client.isClosed()) {
 				System.out.println("****** Handler:Client close");
 				try {
@@ -253,15 +244,4 @@ class Handler implements Runnable { // oder 'extends Thread'
 			}
 		}
 	} // Ende run
-
-	String getWday(String s) { // Datum mit Wochentag
-		SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd.MM.yyyy");
-		String res = "";
-		try {
-			// Parameter ist vom Typ Date
-			res = sdf.format(DateFormat.getDateInstance().parse(s));
-		} catch (ParseException p) {
-		}
-		return res;
-	}
 }

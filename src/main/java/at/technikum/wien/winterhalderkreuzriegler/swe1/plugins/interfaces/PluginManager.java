@@ -8,8 +8,8 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.
 public interface PluginManager {
 
 	/**
-	 * Anhand der Uri wird entschieden, welches Plugin geladen wird und eben
-	 * dieses wird ausgeführt
+	 * Anhand der {@link Uri} wird entschieden, welches Plugin (
+	 * {@link Pluggable}) geladen wird und eben dieses wird ausgeführt
 	 * 
 	 * @param uri
 	 *            {@link Uri} der Webanfrage

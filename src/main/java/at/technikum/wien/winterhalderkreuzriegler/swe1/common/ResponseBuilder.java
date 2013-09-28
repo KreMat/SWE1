@@ -1,5 +1,7 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.common;
 
+import java.util.HashMap;
+
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.StatusCode;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.HTTPResponse;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
@@ -7,8 +9,8 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.
 public class ResponseBuilder {
 
 	public static Response buildResponse(StatusCode status) {
-		// TODO MK - implement me
 		Response r = new HTTPResponse();
+		r.setHeaders(new HashMap<String, String>());
 		r.setStatusCode(status);
 		return r;
 	}

@@ -8,9 +8,8 @@ public class PluginCacheTest {
 
 	@Test
 	public void testRefreshPlugins() {
-		Assert.assertEquals(2, PluginCache.plugins.size());
-		PluginCache.plugins.get("test").request(null);
-		PluginCache.plugins.get("test2").request(null);
+		Assert.assertEquals(2, Cache.plugins.size());
+		Cache.plugins.get("test").request(null, null);
 	}
 
 }
