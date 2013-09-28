@@ -13,6 +13,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Method;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Protocol;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.HTTPRequest;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.HTTPResponse;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.UriImpl;
@@ -173,11 +175,11 @@ class Handler implements Runnable { // oder 'extends Thread'
 						// parse first Line
 						String[] requestLine = line.split(" ");
 
-						request.setMethod(requestLine[0].trim());
+						request.setMethod(Method.valueOf(requestLine[0].trim()));
 
 						Uri uri = new UriImpl();
 						uri.setPath(requestLine[1].trim());
-						uri.setProtocol(requestLine[2].trim());
+						uri.setProtocol(Protocol.valueOf(requestLine[2].trim()));
 
 					} else {
 						String[] headerArgs = line.split(": ", 2);

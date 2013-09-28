@@ -1,11 +1,12 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl;
 
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Protocol;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
 
 public class UriImpl implements Uri {
 	
 	private int port;
-	private String protocol;
+	private Protocol protocol;
 	private String host;
 	private String path;
 	
@@ -21,12 +22,12 @@ public class UriImpl implements Uri {
 	}
 
 	@Override
-	public String getProtocol() {
+	public Protocol getProtocol() {
 		return protocol;
 	}
 
 	@Override
-	public void setProtocol(String protocol) {
+	public void setProtocol(Protocol protocol) {
 		this.protocol = protocol;
 	}
 

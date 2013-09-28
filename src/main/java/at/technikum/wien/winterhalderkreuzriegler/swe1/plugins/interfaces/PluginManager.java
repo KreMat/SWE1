@@ -1,6 +1,6 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces;
 
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.StatusCode;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.StatusCode;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Request;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;

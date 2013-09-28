@@ -4,7 +4,7 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.impl;
 
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.ResponseBuilder;
-import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.StatusCode;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.StatusCode;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Request;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
@@ -21,9 +21,10 @@ public class PluginManagerImpl implements PluginManager {
 
 	@Override
 	public Response excecuteRequest(Uri uri, Request request) {
-		if (PluginCache.plugins.containsKey(uri.getPath())) {
-			return PluginCache.plugins.get(uri.getPath()).request(request);
+		String pluginKey = uri.getPath().split("\\/")[0];
+		if (pluginKey != null && PluginCache.plugins.containsKey(pluginKey)) {
+			return PluginCache.plugins.get(pluginKey).request(request);
 		}
-		return ResponseBuilder.buildResponse(StatusCode.STATUS_404, uri);
+		return ResponseBuilder.buildResponse(StatusCode.STATUS_404);
 	}
 }
