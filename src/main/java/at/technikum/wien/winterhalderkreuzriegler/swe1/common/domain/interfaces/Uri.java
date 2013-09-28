@@ -1,6 +1,7 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces;
 
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Protocol;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Version;
 
 public interface Uri {
 
@@ -18,6 +19,21 @@ public interface Uri {
 	 *            port - z.B.: 8088
 	 */
 	public void setPort(int port);
+
+	/**
+	 * Getter für die ProtocolVersion {@link Version}
+	 * 
+	 * @return version - z.B.: {@link Version#V1_1}
+	 */
+	public Version getVersion();
+
+	/**
+	 * Setter für die ProtocolVersion {@link Version}
+	 * 
+	 * @param version
+	 *            version - z.B.: {@link Version#V1_1}
+	 */
+	public void setVersion(Version version);
 
 	/**
 	 * Getter für das {@link Protocol}

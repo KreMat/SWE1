@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Method;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Protocol;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Version;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.HTTPRequest;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.HTTPResponse;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.UriImpl;
@@ -111,8 +112,7 @@ class NetworkService implements Runnable { // oder extends Thread
 
 				// starte den Handler-Thread zur Realisierung der
 				// Client-Anforderung
-				// pool.execute(new Handler(serverSocket, cs));
-				new Handler(serverSocket, cs).run();
+				pool.execute(new Handler(serverSocket, cs));
 			}
 		} catch (IOException ex) {
 			System.out.println("--- Interrupt NetworkService-run");
@@ -150,6 +150,7 @@ class Handler implements Runnable { // oder 'extends Thread'
 		String line;
 		int lineNumber = 1;
 		Request request = new HTTPRequest();
+		Uri uri = new UriImpl();
 		Response response = new HTTPResponse();
 
 		try {
@@ -166,7 +167,6 @@ class Handler implements Runnable { // oder 'extends Thread'
 				if (line.length() == 0) {
 					// zwischen Header und Body oder End of Header
 					request.setBody(client.getInputStream());
-					System.out.println("blabla");
 					// ModulManager aufrufen
 					break;
 				} else {
@@ -177,22 +177,34 @@ class Handler implements Runnable { // oder 'extends Thread'
 
 						request.setMethod(Method.valueOf(requestLine[0].trim()));
 
-						Uri uri = new UriImpl();
 						uri.setPath(requestLine[1].trim());
-						uri.setProtocol(Protocol.valueOf(requestLine[2].trim()));
+						String[] splittetProtocol = requestLine[2].trim()
+								.split("\\/");
+
+						Protocol p = Protocol.valueOf(splittetProtocol[0]);
+						uri.setProtocol(p);
+
+						Version v = Version.getVersion(splittetProtocol[1]);
+						uri.setVersion(v);
 
 					} else {
 						String[] headerArgs = line.split(": ", 2);
 						// headers Map befuellen
 						request.addToHeader(headerArgs[0], headerArgs[1]);
 
-						if (headerArgs[0] == "Content-Length") {
+						if (headerArgs[0].equals("Content-Length")) {
 							request.setContentLength(Integer
 									.parseInt(headerArgs[1]));
 						}
 
-						if (headerArgs[0] == "Content-Type") {
+						if (headerArgs[0].equals("Content-Type")) {
 							request.setContentType(headerArgs[1]);
+						}
+
+						if (headerArgs[0].equals("Host")) {
+							String[] splittedHost = headerArgs[1].split(":");
+							uri.setHost(splittedHost[0]);
+							uri.setPort(Integer.parseInt(splittedHost[1]));
 						}
 					}
 				}
@@ -200,14 +212,7 @@ class Handler implements Runnable { // oder 'extends Thread'
 			}
 
 			System.out.println(request);
-
-			BufferedReader bufferedReader1 = new BufferedReader(
-					new InputStreamReader(request.getBody()));
-
-			while ((line = bufferedReader1.readLine()) != null) {
-				System.out.println(line);
-
-			}
+			System.out.println(uri);
 
 			// char[] buffer = new char[100];
 			// int anzahlZeichen = bufferedReader.read(buffer, 0, 100); //

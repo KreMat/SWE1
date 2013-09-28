@@ -75,6 +75,7 @@ public class HTTPRequest implements Request {
 
 	public String toString() {
 		StringBuilder out = new StringBuilder();
+		out.append("REQUEST: \n");
 		out.append("method: " + method);
 		out.append("\n");
 		out.append("contentType: " + contentType);
