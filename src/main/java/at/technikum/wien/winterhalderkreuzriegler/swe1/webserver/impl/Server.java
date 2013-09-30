@@ -159,7 +159,7 @@ class Handler implements Runnable { // oder 'extends Thread'
 			int lineNumber = 1;
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
-				// System.out.println(line);
+				 System.out.println(line);
 
 				if (line.length() == 0) {
 					// zwischen Header und Body oder End of Header
@@ -170,16 +170,16 @@ class Handler implements Runnable { // oder 'extends Thread'
 					if (lineNumber == 1) {
 						// parse first Line
 						String[] requestLine = line.split(" ");
-
+						// GET
 						request.setMethod(Method.valueOf(requestLine[0].trim()));
-
+						// /index.html
 						uri.setPath(requestLine[1].trim());
 						String[] splittetProtocol = requestLine[2].trim()
 								.split("\\/");
-
+						// HTTP
 						Protocol p = Protocol.valueOf(splittetProtocol[0]);
 						uri.setProtocol(p);
-
+						// 1.1
 						Version v = Version
 								.getByVersionString(splittetProtocol[1]);
 						uri.setVersion(v);
