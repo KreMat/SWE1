@@ -177,7 +177,7 @@ class Handler implements Runnable { // oder 'extends Thread'
 						String[] splittetProtocol = requestLine[2].trim()
 								.split("\\/");
 						// HTTP
-						Protocol p = Protocol.valueOf(splittetProtocol[0]);
+						Protocol p = Protocol.getByProtocolString(splittetProtocol[0]);
 						uri.setProtocol(p);
 						// 1.1
 						Version v = Version
