@@ -45,7 +45,7 @@ public class PluginManagerTest {
 				Protocol.HTTP);
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Content-Language", "de");
-		Request request = helper.createRequest(null, 0, "text/html", headers,
+		Request request = helper.createRequest(null, 0l, "text/html", headers,
 				Method.GET);
 		Response response = pluginManager.excecuteRequest(uri, request);
 		Assert.assertNotNull(response);

@@ -19,9 +19,9 @@ public interface Request {
 
 	public void setContentType(String type);
 
-	public int getContentLength();
+	public Long getContentLength();
 
-	public void setContentLength(int length);
+	public void setContentLength(Long length);
 
 	public InputStream getBody();
 

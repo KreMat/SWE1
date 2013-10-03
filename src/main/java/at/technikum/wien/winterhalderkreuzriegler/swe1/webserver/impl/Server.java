@@ -190,8 +190,8 @@ class Handler implements Runnable { // oder 'extends Thread'
 						request.addToHeader(headerArgs[0], headerArgs[1]);
 
 						if (headerArgs[0].equals("Content-Length")) {
-							request.setContentLength(Integer
-									.parseInt(headerArgs[1]));
+							request.setContentLength(Long
+									.parseLong(headerArgs[1]));
 						}
 
 						if (headerArgs[0].equals("Content-Type")) {

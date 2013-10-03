@@ -28,10 +28,10 @@ public class TestHelper {
 
 	public Request createDefaultRequest() {
 		Map<String, String> headers = new HashMap<String, String>();
-		return createRequest(null, 0, "text/html", headers, Method.GET);
+		return createRequest(null, 0l, "text/html", headers, Method.GET);
 	}
 
-	public Request createRequest(InputStream body, int length, String type,
+	public Request createRequest(InputStream body, Long length, String type,
 			Map<String, String> headers, Method method) {
 		Request r = new HTTPRequest();
 		r.setBody(body);

@@ -12,7 +12,7 @@ public class HTTPRequest implements Request {
 	private Method method;
 	private Map<String, String> headers;
 	private String contentType;
-	private int contentLength;
+	private Long contentLength;
 	private InputStream body;
 
 	public HTTPRequest() {
@@ -50,12 +50,12 @@ public class HTTPRequest implements Request {
 	}
 
 	@Override
-	public int getContentLength() {
+	public Long getContentLength() {
 		return contentLength;
 	}
 
 	@Override
-	public void setContentLength(int length) {
+	public void setContentLength(Long length) {
 		this.contentLength = length;
 	}
 
