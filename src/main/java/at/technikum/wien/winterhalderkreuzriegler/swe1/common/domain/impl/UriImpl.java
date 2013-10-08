@@ -11,6 +11,13 @@ public class UriImpl implements Uri {
 	private Version version;
 	private String host;
 	private String path;
+	
+	public UriImpl(int port, Protocol protocol, Version version, String host){
+		this.port = port;
+		this.protocol = protocol;
+		this.version = version;
+		this.host = host;
+	}
 
 	@Override
 	public int getPort() {

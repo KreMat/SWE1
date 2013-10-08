@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,8 +13,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.ResponseBuilder;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Method;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Protocol;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.StatusCode;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Version;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.HTTPRequest;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.UriImpl;
@@ -143,23 +146,23 @@ class Handler implements Runnable { // oder 'extends Thread'
 	}
 
 	public void run() {
-
 		try {
 
 			System.out.println("running service, " + Thread.currentThread());
-
-			PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-
 			BufferedReader bufferedReader = new BufferedReader(
 					new InputStreamReader(client.getInputStream()));
 
 			Request request = new HTTPRequest();
-			Uri uri = new UriImpl();
+			int port = 0;
+			Version version = null;
+			Protocol protocol = null;
+			String host = null;
+			String path = null;
 
 			int lineNumber = 1;
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
-				 System.out.println(line);
+				System.out.println(line);
 
 				if (line.length() == 0) {
 					// zwischen Header und Body oder End of Header
@@ -173,16 +176,15 @@ class Handler implements Runnable { // oder 'extends Thread'
 						// GET
 						request.setMethod(Method.valueOf(requestLine[0].trim()));
 						// /index.html
-						uri.setPath(requestLine[1].trim());
+						path = requestLine[1].trim();
 						String[] splittetProtocol = requestLine[2].trim()
 								.split("\\/");
 						// HTTP
-						Protocol p = Protocol.getByProtocolString(splittetProtocol[0]);
-						uri.setProtocol(p);
+						protocol = Protocol
+								.getByProtocolString(splittetProtocol[0]);
 						// 1.1
-						Version v = Version
+						version = Version
 								.getByVersionString(splittetProtocol[1]);
-						uri.setVersion(v);
 
 					} else {
 						String[] headerArgs = line.split(": ", 2);
@@ -200,8 +202,8 @@ class Handler implements Runnable { // oder 'extends Thread'
 
 						if (headerArgs[0].equals("Host")) {
 							String[] splittedHost = headerArgs[1].split(":");
-							uri.setHost(splittedHost[0]);
-							uri.setPort(Integer.parseInt(splittedHost[1]));
+							host = splittedHost[0];
+							port = Integer.parseInt(splittedHost[1]);
 						}
 					}
 				}
@@ -210,38 +212,23 @@ class Handler implements Runnable { // oder 'extends Thread'
 
 			// System.out.println(request);
 			// System.out.println(uri);
-
+			Uri uri = new UriImpl(port, protocol, version, host);
+			uri.setPath(path);
 			PluginManager manager = new PluginManagerImpl();
 			Response response = manager.excecuteRequest(uri, request);
 
-			if (uri != null && uri.getProtocol() != null
-					&& response.getStatusCode() != null) {
-				out.println(uri.getProtocol().name()
-						+ (uri.getVersion() != null ? "/"
-								+ uri.getVersion().getVersion() : "") + " "
-						+ response.getStatusCode().getCode() + " OK");
-			} else {
-				out.println("HTTP/1.1 404 NOK");
-			}
-			out.println("Content-Type: " + response.getContentType());
-			out.println("Content-Length: " + response.getContentLength());
-			for (Entry<String, String> entry : response.getHeaders().entrySet()) {
-				out.println(entry.getKey() + ": " + entry.getValue());
-			}
-
-			out.println();
-
-			if (response.getBody() != null) {
-
-				InputStream in = response.getBody();
-				byte[] buffer = new byte[1024];
-				int len;
-				while ((len = in.read(buffer)) != -1) {
-					client.getOutputStream().write(buffer, 0, len);
-				}
-			}
+			writeResponse(client.getOutputStream(), uri, response);
 		} catch (IOException e) {
 			System.out.println("IOException, Handler-run");
+		} catch (Exception e) {
+			Response r = ResponseBuilder.buildResponse(StatusCode.STATUS_500);
+			Uri uriEmpty = new UriImpl(0, Protocol.HTTP, Version.V1_1, "NOHOST");
+			try {
+				writeResponse(client.getOutputStream(), uriEmpty, r);
+			} catch (IOException ioe) {
+
+			}
+
 		} finally {
 			// out.println(response); // Rückgabe Ergebnis an den Client
 			if (!client.isClosed()) {
@@ -253,4 +240,31 @@ class Handler implements Runnable { // oder 'extends Thread'
 			}
 		}
 	} // Ende run
+
+	private void writeResponse(OutputStream outStream, Uri uri,
+			Response response) throws IOException {
+		PrintWriter out = new PrintWriter(outStream, true);
+
+			out.println(uri.getProtocol().name() + "/"
+					+ uri.getVersion().getVersion() + " "
+					+ response.getStatusCode().getCode() + ((response.getStatusCode().getOk()) ? "OK" : "NOK"));
+
+		out.println("Content-Type: " + response.getContentType());
+		out.println("Content-Length: " + response.getContentLength());
+		for (Entry<String, String> entry : response.getHeaders().entrySet()) {
+			out.println(entry.getKey() + ": " + entry.getValue());
+		}
+
+		out.println();
+
+		if (response.getBody() != null) {
+
+			InputStream in = response.getBody();
+			byte[] buffer = new byte[1024];
+			int len;
+			while ((len = in.read(buffer)) != -1) {
+				outStream.write(buffer, 0, len);
+			}
+		}
+	}
 }
