@@ -6,6 +6,7 @@ import java.util.Map;
 
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Method;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Protocol;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Version;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.HTTPRequest;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.UriImpl;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Request;
@@ -18,7 +19,8 @@ public class TestHelper {
 	}
 
 	public Uri createUri(String host, String path, int port, Protocol protocol) {
-		Uri uri = new UriImpl();
+		// von Richie geaendert, nachdem keine Version uebergeben wird hab ich die auf 1.1 gesetzt
+		Uri uri = new UriImpl(port, protocol, Version.V1_1, host);
 		uri.setHost(host);
 		uri.setPath(path);
 		uri.setPort(port);
