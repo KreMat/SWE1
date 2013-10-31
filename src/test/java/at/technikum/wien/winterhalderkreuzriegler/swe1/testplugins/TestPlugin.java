@@ -16,4 +16,16 @@ public class TestPlugin implements Pluggable {
 		return ResponseBuilder.buildResponse(StatusCode.STATUS_200);
 	}
 
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+
+	}
+
 }

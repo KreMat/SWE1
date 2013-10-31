@@ -30,4 +30,14 @@ public class StaticPlugin implements Pluggable {
 		return PluginHelper.createFileResponse(Cache.properties
 				.getProperty(WebserverConstants.WWW_HOME_KEY) + filePath);
 	}
+
+	@Override
+	public void start() {
+		// Nothing to do
+	}
+
+	@Override
+	public void stop() {
+		// Nothing to do
+	}
 }

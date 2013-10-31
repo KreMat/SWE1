@@ -20,11 +20,10 @@ public class Cache {
 	static {
 		plugins = new HashMap<String, Pluggable>();
 		properties = new Properties();
-		refreshProperties();
-		refreshPluginCache();
+		refreshCache();
 	}
 
-	public static void refreshPluginCache() {
+	private static void refreshPluginCache() {
 		String pluginDirPath = properties.getProperty(
 				WebserverConstants.PLUGIN_DIR_KEY,
 				WebserverConstants.DEFAULT_PLUGIN_DIR_PATH);
@@ -44,10 +43,11 @@ public class Cache {
 			throw new IllegalArgumentException(
 					"Plugins konnten nicht geladen werden!!!", e);
 		}
+		Cache.plugins.clear();
 		Cache.plugins.putAll(loadedPlugins);
 	}
 
-	public static void refreshProperties() {
+	private static void refreshProperties() {
 		try {
 			properties.clear();
 			properties.load(new FileReader(new File(
@@ -56,6 +56,11 @@ public class Cache {
 			throw new IllegalArgumentException(
 					"Config-File konnte nicht geladen werden!!!", e);
 		}
+	}
+
+	public static void refreshCache() {
+		refreshProperties();
+		refreshPluginCache();
 	}
 
 }

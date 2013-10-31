@@ -41,7 +41,7 @@ public class PluginManagerTest {
 
 	@Test
 	public void testExecuteRequest() {
-		Uri uri = helper.createUri("localhost", "test/index.html", 8088,
+		Uri uri = helper.createUri("localhost", "/test/index.html", 8088,
 				Protocol.HTTP);
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Content-Language", "de");

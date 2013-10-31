@@ -13,4 +13,18 @@ public class TemperaturPlugin implements Pluggable {
 		return null;
 	}
 
+	@Override
+	public void start() {
+		// TODO Hier wird der Thread gestartet, in dem die Serverdaten
+		// ausgelesen
+		// werden
+		System.out.println("TemperaturPlugin gestartet");
+	}
+
+	@Override
+	public void stop() {
+		// TODO Hier wird der Thread, der die Serverdaten ausliest beendet
+		System.out.println("TemperaturPlugin beendet");
+	}
+
 }

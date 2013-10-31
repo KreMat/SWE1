@@ -23,7 +23,9 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.UriImp
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Request;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.Cache;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.impl.PluginManagerImpl;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Pluggable;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.PluginManager;
 
 public class Server {
@@ -32,6 +34,14 @@ public class Server {
 	 * @param args
 	 */
 	public static void main(String[] args) throws IOException {
+
+//		Cache.refreshCache();
+//
+		// Plugins starten
+		for (Entry<String, Pluggable> entry : Cache.plugins.entrySet()) {
+			entry.getValue().start();
+		}
+
 		final ExecutorService pool;
 		final ServerSocket serverSocket;
 		int port = 8088;
@@ -245,9 +255,10 @@ class Handler implements Runnable { // oder 'extends Thread'
 			Response response) throws IOException {
 		PrintWriter out = new PrintWriter(outStream, true);
 
-			out.println(uri.getProtocol().name() + "/"
-					+ uri.getVersion().getVersion() + " "
-					+ response.getStatusCode().getCode() + ((response.getStatusCode().getOk()) ? "OK" : "NOK"));
+		out.println(uri.getProtocol().name() + "/"
+				+ uri.getVersion().getVersion() + " "
+				+ response.getStatusCode().getCode()
+				+ ((response.getStatusCode().getOk()) ? "OK" : "NOK"));
 
 		out.println("Content-Type: " + response.getContentType());
 		out.println("Content-Length: " + response.getContentLength());

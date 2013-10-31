@@ -26,4 +26,14 @@ public interface Pluggable {
 	 */
 	public Response request(Uri uri, Request request);
 
+	/**
+	 * Startet das Plugin
+	 */
+	public void start();
+
+	/**
+	 * Beendet das Plugin mit allen Threads
+	 */
+	public void stop();
+
 }
