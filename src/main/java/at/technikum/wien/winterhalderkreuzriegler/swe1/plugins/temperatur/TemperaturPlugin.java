@@ -1,9 +1,18 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.temperatur;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.StringWriter;
 import java.sql.Timestamp;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.ResponseBuilder;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.StatusCode;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Request;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
@@ -16,8 +25,27 @@ public class TemperaturPlugin implements Pluggable {
 
 	@Override
 	public Response request(Uri uri, Request request) {
-		// TODO Auto-generated method stub
-		return null;
+		Response response = ResponseBuilder
+				.buildResponse(StatusCode.STATUS_500);
+		// TODO implement me
+		return response;
+	}
+
+	private String marshalSensorData(SensorData data) {
+		try {
+			JAXBContext jaxbContext = JAXBContext.newInstance(SensorData.class);
+			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+			// output pretty printed
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+			StringWriter writer = new StringWriter();
+
+			jaxbMarshaller.marshal(data, writer);
+			return writer.toString();
+		} catch (JAXBException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 	@Override
@@ -45,6 +73,7 @@ public class TemperaturPlugin implements Pluggable {
 					data.setValue(readValue());
 					data.setTimestamp(new Timestamp(System.currentTimeMillis()));
 					sensorDao.createSensorData(data);
+					System.out.println(marshalSensorData(data));
 				}
 
 				private double readValue() {
