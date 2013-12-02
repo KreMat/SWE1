@@ -4,12 +4,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.ResponseBuilder;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.StatusCode;
@@ -31,21 +37,38 @@ public class TemperaturPlugin implements Pluggable {
 		return response;
 	}
 
-	private String marshalSensorData(SensorData data) {
+	private String marshalSensorData(SensorWrapper wrapper) {
 		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance(SensorData.class);
+			JAXBContext jaxbContext = JAXBContext
+					.newInstance(SensorWrapper.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
-			// output pretty printed
+			// für eine schöne Formatierung ;-)
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
 			StringWriter writer = new StringWriter();
 
-			jaxbMarshaller.marshal(data, writer);
+			jaxbMarshaller.marshal(wrapper, writer);
 			return writer.toString();
 		} catch (JAXBException e) {
 			throw new IllegalStateException(e);
 		}
+	}
+
+	@XmlRootElement
+	private static class SensorWrapper {
+
+		private List<SensorData> list = new ArrayList<SensorData>();
+
+		@XmlElement(name = "data")
+		public List<SensorData> getList() {
+			return list;
+		}
+
+		public void add(SensorData data) {
+			list.add(data);
+		}
+
 	}
 
 	@Override
@@ -73,7 +96,10 @@ public class TemperaturPlugin implements Pluggable {
 					data.setValue(readValue());
 					data.setTimestamp(new Timestamp(System.currentTimeMillis()));
 					sensorDao.createSensorData(data);
-					System.out.println(marshalSensorData(data));
+					SensorWrapper wrapper = new SensorWrapper();
+					wrapper.add(data);
+					wrapper.add(data);
+					System.out.println(marshalSensorData(wrapper));
 				}
 
 				private double readValue() {
