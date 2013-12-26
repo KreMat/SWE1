@@ -34,7 +34,7 @@ public class StaticPluginTest {
 	@Test
 	public void testRequest() throws IOException {
 		Uri uri = helper.createDefaultUri();
-		uri.setPath("/static/Logo_FHTW.jpg");
+		uri.setPath("/static/index.html");
 		Request request = helper.createDefaultRequest();
 		Response response = staticPlugin.request(uri, request);
 		Assert.assertNotNull(response);

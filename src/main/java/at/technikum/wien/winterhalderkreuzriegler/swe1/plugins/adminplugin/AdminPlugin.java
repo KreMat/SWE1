@@ -37,10 +37,6 @@ public class AdminPlugin implements Pluggable {
 			return createIndexResponse();
 		} else if ("/change".equals(path)) {
 			return change(request);
-			// } else if ("/pluginForm".equals(path)) {
-			// return uploadPluginForm();
-			// } else if ("/uploadPlugin".equals(path)) {
-			// return uploadPlugin(request);
 		}
 		return ResponseBuilder.buildResponse(StatusCode.STATUS_404);
 	}
