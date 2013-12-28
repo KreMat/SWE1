@@ -1,5 +1,7 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl;
 
+import java.util.Map;
+
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Protocol;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Version;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
@@ -11,8 +13,9 @@ public class UriImpl implements Uri {
 	private Version version;
 	private String host;
 	private String path;
-	
-	public UriImpl(int port, Protocol protocol, Version version, String host){
+	private Map<String, String> getParams;
+
+	public UriImpl(int port, Protocol protocol, Version version, String host) {
 		this.port = port;
 		this.protocol = protocol;
 		this.version = version;
@@ -67,6 +70,16 @@ public class UriImpl implements Uri {
 	@Override
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	@Override
+	public Map<String, String> getGETParams() {
+		return getParams;
+	}
+
+	@Override
+	public void setGETParams(Map<String, String> getParams) {
+		this.getParams = getParams;
 	}
 
 	@Override

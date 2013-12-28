@@ -60,12 +60,7 @@ public class TemperaturPlugin implements Pluggable {
 		int month = TemperaturHelper.getMonth();
 		int day = TemperaturHelper.getDay();
 		if (Method.GET.equals(request.getMethod())) {
-			int idx = uri.getPath().indexOf('?');
-			String paramString = "";
-			if (idx != -1) {
-				paramString = uri.getPath().substring(idx);
-			}
-			Map<String, String> params = UriHelper.getParamValue(paramString);
+			Map<String, String> params = uri.getGETParams();
 			if (params.containsKey(YEAR)) {
 				year = Integer.valueOf(params.get(YEAR));
 			}
@@ -89,7 +84,6 @@ public class TemperaturPlugin implements Pluggable {
 				String decodedParams = URLDecoder
 						.decode(wr.toString(), "UTF-8");
 
-				System.out.println("decodedParams: " + decodedParams);
 				Map<String, String> params = UriHelper
 						.getParamValue(decodedParams);
 				if (params.containsKey(DATE)) {
@@ -120,6 +114,7 @@ public class TemperaturPlugin implements Pluggable {
 			List<SensorData> loadSensorData) {
 		Response r = ResponseBuilder.buildResponse(StatusCode.STATUS_200);
 		StringBuilder body = new StringBuilder();
+		body.append("<html><head><meta charset=\"utf-8\"></head>");
 		body.append("<h1>Messwerte vom " + day + "." + month + "." + year
 				+ "</h1>");
 
@@ -146,6 +141,8 @@ public class TemperaturPlugin implements Pluggable {
 			body.append("</tr>");
 		}
 		body.append("</table>");
+
+		body.append("</html>");
 
 		r.setBody(new ByteArrayInputStream(body.toString().getBytes()));
 		r.setContentLength(body.length());
@@ -189,6 +186,7 @@ public class TemperaturPlugin implements Pluggable {
 
 		private List<SensorData> list = new ArrayList<SensorData>();
 
+		@SuppressWarnings("unused")
 		public SensorWrapper() {
 
 		}
