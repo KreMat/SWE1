@@ -1,7 +1,5 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.temperatur;
 
-import java.sql.Timestamp;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
