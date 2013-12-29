@@ -121,7 +121,7 @@ public class NaviPlugin implements Pluggable {
 	private Response blockResponse() {
 		Response r = ResponseBuilder.buildResponse(StatusCode.STATUS_200);
 		StringBuilder body = new StringBuilder();
-		body.append("<h1>Leider kann derzeit keine Anfrage beantwortet werden, da die OpenStreetMap aktualiesiert wird!</h1>");
+		body.append("<h1>Leider kann derzeit keine Anfrage beantwortet werden, da die OpenStreetMap aktualisiert wird!</h1>");
 		r.setBody(new ByteArrayInputStream(body.toString().getBytes()));
 		r.setContentLength(body.length());
 		r.setContentType("text/html");
