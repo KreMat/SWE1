@@ -1,7 +1,5 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.temperatur;
 
-import java.sql.Timestamp;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -11,7 +9,7 @@ public class SensorData {
 
 	private double value;
 
-	private Timestamp timestamp;
+	private long timestamp;
 
 	private long id;
 
@@ -24,12 +22,12 @@ public class SensorData {
 		this.value = value;
 	}
 
-	public Timestamp getTimestamp() {
+	@XmlElement
+	public long getTime() {
 		return timestamp;
 	}
 
-	@XmlElement
-	public void setTimestamp(Timestamp timestamp) {
+	public void setTime(long timestamp) {
 		this.timestamp = timestamp;
 	}
 

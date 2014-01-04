@@ -1,5 +1,7 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces;
 
+import java.util.Map;
+
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Protocol;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Version;
 
@@ -79,5 +81,20 @@ public interface Uri {
 	 *            path - z.B.: static/index.html
 	 */
 	public void setPath(String path);
+
+	/**
+	 * Getter für die GET-Parameter
+	 * 
+	 * @return params - z.B.: street=MyStreet
+	 */
+	public Map<String, String> getGETParams();
+
+	/**
+	 * Getter für die Parameter
+	 * 
+	 * @param params
+	 *            params - z.B.: street=MyStreet
+	 */
+	public void setGETParams(Map<String, String> params);
 
 }

@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URLDecoder;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,6 +24,7 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.UriImp
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Request;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.helper.UriHelper;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.Cache;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.impl.PluginManagerImpl;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Pluggable;
@@ -35,8 +37,8 @@ public class Server {
 	 */
 	public static void main(String[] args) throws IOException {
 
-//		Cache.refreshCache();
-//
+		// Cache.refreshCache();
+		//
 		// Plugins starten
 		for (Entry<String, Pluggable> entry : Cache.plugins.entrySet()) {
 			entry.getValue().start();
@@ -168,6 +170,7 @@ class Handler implements Runnable { // oder 'extends Thread'
 			Protocol protocol = null;
 			String host = null;
 			String path = null;
+			String getParams = null;
 
 			int lineNumber = 1;
 			String line;
@@ -186,7 +189,18 @@ class Handler implements Runnable { // oder 'extends Thread'
 						// GET
 						request.setMethod(Method.valueOf(requestLine[0].trim()));
 						// /index.html
-						path = requestLine[1].trim();
+						String tempPath = requestLine[1];
+
+						int idx = tempPath.indexOf('?');
+						if (idx != -1) {
+							path = tempPath.substring(0, idx);
+							getParams = URLDecoder.decode(
+									tempPath.substring(idx + 1), "UTF-8");
+							// tempPath.substring(idx + 1), "ASCII");
+						} else {
+							path = tempPath;
+						}
+
 						String[] splittetProtocol = requestLine[2].trim()
 								.split("\\/");
 						// HTTP
@@ -224,6 +238,8 @@ class Handler implements Runnable { // oder 'extends Thread'
 			// System.out.println(uri);
 			Uri uri = new UriImpl(port, protocol, version, host);
 			uri.setPath(path);
+			uri.setGETParams(UriHelper.getParamValue(getParams));
+
 			PluginManager manager = new PluginManagerImpl();
 			Response response = manager.excecuteRequest(uri, request);
 
@@ -236,7 +252,6 @@ class Handler implements Runnable { // oder 'extends Thread'
 			try {
 				writeResponse(client.getOutputStream(), uriEmpty, r);
 			} catch (IOException ioe) {
-
 			}
 
 		} finally {

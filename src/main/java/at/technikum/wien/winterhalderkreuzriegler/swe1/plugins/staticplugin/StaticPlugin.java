@@ -28,7 +28,7 @@ public class StaticPlugin implements Pluggable {
 	public Response request(Uri uri, Request request) {
 		String filePath = UriHelper.convertPath(uri.getPath());
 		return PluginHelper.createFileResponse(Cache.properties
-				.getProperty(WebserverConstants.WWW_HOME_KEY) + filePath);
+				.getProperty(WebserverConstants.WWW_HOME_KEY) + "/" + filePath);
 	}
 
 	@Override
