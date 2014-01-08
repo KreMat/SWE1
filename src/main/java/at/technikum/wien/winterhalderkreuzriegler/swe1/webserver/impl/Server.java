@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.ResponseBuilder;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.WebserverConstants;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Method;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Protocol;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.StatusCode;
@@ -32,17 +33,17 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Plugin
 
 /**
  * 
- * Dies ist die Implementierung des Webservers. Erst wird ein Socket geoeffnet der auf den vordefinierten Port hoert.
- * Anschliessend wird auf eine Verbindung von einem client gewartet. Fragt ein Client an wird ein neuer Thread gestartet
- * und diesen der neue Socket uebergeben. Anschliessend wird ein HTTPRequest und Uri Objekt erzeugt und geparse.
- * Diese beiden Objekte werden dem PluginManager uebergeben, der diese anschliessend weiterverarbeitet und entscheidet
- * welches Plugin geladen werden muss.  
+ * Dies ist die Implementierung des Webservers. Erst wird ein Socket geoeffnet
+ * der auf den vordefinierten Port hoert. Anschliessend wird auf eine Verbindung
+ * von einem client gewartet. Fragt ein Client an wird ein neuer Thread
+ * gestartet und diesen der neue Socket uebergeben. Anschliessend wird ein
+ * HTTPRequest und Uri Objekt erzeugt und geparse. Diese beiden Objekte werden
+ * dem PluginManager uebergeben, der diese anschliessend weiterverarbeitet und
+ * entscheidet welches Plugin geladen werden muss.
  * 
- *
+ * 
  */
 public class Server {
-
-	private static final int PORT = 8089;
 
 	/**
 	 * @param args
@@ -58,7 +59,6 @@ public class Server {
 
 		final ExecutorService pool;
 		final ServerSocket serverSocket;
-		int port = PORT;
 		String var = "C";
 		String zusatz;
 		if (args.length > 0)
@@ -75,7 +75,7 @@ public class Server {
 			pool = Executors.newFixedThreadPool(poolSize);
 			zusatz = "poolsize=" + poolSize;
 		}
-		serverSocket = new ServerSocket(port);
+		serverSocket = new ServerSocket(WebserverConstants.PORT);
 		// Thread zur Behandlung der Client-Server-Kommunikation, der Thread-
 		// Parameter liefert das Runnable-Interface (also die run-Methode fuer
 		// t1).
@@ -284,7 +284,7 @@ class Handler implements Runnable { // oder 'extends Thread'
 
 		out.println(uri.getProtocol().name() + "/"
 				+ uri.getVersion().getVersion() + " "
-				+ response.getStatusCode().getCode()
+				+ response.getStatusCode().getCode() + " "
 				+ ((response.getStatusCode().getOk()) ? "OK" : "NOK"));
 
 		out.println("Content-Type: " + response.getContentType());

@@ -3,7 +3,9 @@
  */
 package at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.staticplugin;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,7 +21,7 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.helper.TestHelper;
  * @author Matthias
  * 
  */
-public class StaticPluginTest {
+public class StaticPluginTest extends Assert {
 
 	private TestHelper helper;
 
@@ -37,8 +39,11 @@ public class StaticPluginTest {
 		uri.setPath("/static/index.html");
 		Request request = helper.createDefaultRequest();
 		Response response = staticPlugin.request(uri, request);
-		Assert.assertNotNull(response);
-		Assert.assertEquals(StatusCode.STATUS_200, response.getStatusCode());
-		Assert.assertEquals("text/html", response.getContentType());
+		assertNotNull(response);
+		assertEquals(StatusCode.STATUS_200, response.getStatusCode());
+		assertEquals("text/html", response.getContentType());
+		assertEquals(
+				Long.valueOf(Files.size(new File("www/index.html").toPath())),
+				response.getContentLength());
 	}
 }

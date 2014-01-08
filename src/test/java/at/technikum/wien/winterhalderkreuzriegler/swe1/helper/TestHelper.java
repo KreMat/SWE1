@@ -15,16 +15,20 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.
 public class TestHelper {
 
 	public Uri createDefaultUri() {
-		return createUri("localhost", "test/index.html", 8088, Protocol.HTTP);
+		return createUri("localhost", "test/index.html", 8088, Protocol.HTTP,
+				new HashMap<String, String>());
 	}
 
-	public Uri createUri(String host, String path, int port, Protocol protocol) {
-		// von Richie geaendert, nachdem keine Version uebergeben wird hab ich die auf 1.1 gesetzt
+	public Uri createUri(String host, String path, int port, Protocol protocol,
+			Map<String, String> params) {
+		// von Richie geaendert, nachdem keine Version uebergeben wird hab ich
+		// die auf 1.1 gesetzt
 		Uri uri = new UriImpl(port, protocol, Version.V1_1, host);
 		uri.setHost(host);
 		uri.setPath(path);
 		uri.setPort(port);
 		uri.setProtocol(protocol);
+		uri.setGETParams(params);
 		return uri;
 	}
 

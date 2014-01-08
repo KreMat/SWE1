@@ -31,11 +31,12 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Plugga
 
 /**
  * 
- * Dies ist die Implementierung des TemperaturPlugins. Das angezeigte Datum muss als Parameter uebergeben werden.
- * Dies geht sowohl als POST sowie als GET. Wenn kein Datum uebergeben wird, wird das heutige Datum ausgewaehlt.
- * Wenn an die URI /YYYY/MM/DD anfehaengt wird, wird von einer REST abfrage ausgegangen und die Daten werden als XML
- * ausgegeben.
- *
+ * Dies ist die Implementierung des TemperaturPlugins. Das angezeigte Datum muss
+ * als Parameter uebergeben werden. Dies geht sowohl als POST sowie als GET.
+ * Wenn kein Datum uebergeben wird, wird das heutige Datum ausgewaehlt. Wenn an
+ * die URI /YYYY/MM/DD anfehaengt wird, wird von einer REST abfrage ausgegangen
+ * und die Daten werden als XML ausgegeben.
+ * 
  */
 public class TemperaturPlugin implements Pluggable {
 
@@ -52,7 +53,8 @@ public class TemperaturPlugin implements Pluggable {
 	public Response request(Uri uri, Request request) {
 		String path = UriHelper.convertPath(uri.getPath());
 		String[] splittedPath = UriHelper.splitPath(path);
-		if (splittedPath.length == 0 || splittedPath[0].equals(SHOW_DATA)) {
+		if (splittedPath.length == 0 || splittedPath[0].isEmpty()
+				|| splittedPath[0].equals(SHOW_DATA)) {
 			return handleRequest(uri, request);
 		} else if (splittedPath.length == 3) {
 			return handleRestRequest(Integer.valueOf(splittedPath[0]),

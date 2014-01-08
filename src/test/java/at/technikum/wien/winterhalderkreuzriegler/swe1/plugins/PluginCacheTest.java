@@ -1,15 +1,23 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.plugins;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
-public class PluginCacheTest {
+import at.technikum.wien.winterhalderkreuzriegler.swe1.common.WebserverConstants;
+
+public class PluginCacheTest extends Assert {
 
 	@Test
 	public void testRefreshPlugins() {
-		Assert.assertEquals(4, Cache.plugins.size());
+		Assert.assertEquals(5, Cache.plugins.size());
 		Cache.plugins.get("test").request(null, null);
+	}
+
+	@Test
+	public void refreshProperties() {
+		Cache.refreshCache();
+		assertEquals("www",
+				Cache.properties.getProperty(WebserverConstants.WWW_HOME_KEY));
 	}
 
 }
