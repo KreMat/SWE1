@@ -2,6 +2,11 @@ package at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.temperatur;
 
 import java.util.Calendar;
 
+/**
+ * 
+ * Helferklasse fuer das TemperaturPlugin. Es erzeugt das aktuelle Jahr, Monat und den Tag.
+ *
+ */
 public class TemperaturHelper {
 
 	public static int getYear() {

@@ -3,6 +3,11 @@ package at.technikum.wien.winterhalderkreuzriegler.swe1.common.helper;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * Stellt saemtliche Helfermethoden fuer die UriImpl Klasse zur verfuegung.
+ *
+ */
 public class UriHelper {
 
 	/**

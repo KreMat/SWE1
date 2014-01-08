@@ -6,9 +6,8 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.
 
 /**
  * 
- * Interface für alle Implementierungen eines Plugins
+ * Interface fuer alle Implementierungen eines Plugins. Alle Plugins muessen dieses Interface implementieren.
  * 
- * @author Matthias
  * 
  */
 public interface Pluggable {

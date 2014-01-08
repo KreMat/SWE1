@@ -20,6 +20,15 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.helper.UriHelper;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.Cache;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Pluggable;
 
+/**
+ * 
+ * Dies ist Implementierung des Navigationsplugins. Beim ersten aufruf wird die Map aus der .osm Datei erzeugt.
+ * Anschliessend kann nach einem Strassennamen gesucht werden. Die gefunden Orte werden als Liste <li> in der HTML Seite
+ * ausgegeben. Wenn keine passenden eintrage gefunden werden, wird eine entsprechende Meldung ausgegeben.
+ * Waehrend die Map ausgebaut wird (die Karte neu eingelesen wird), kann keine suche durchgefuehrt werden und der Benutzer
+ * erhaelt eine entsprechende Nachricht.
+ *
+ */
 public class NaviPlugin implements Pluggable {
 
 	private static final String TRUE = "true";

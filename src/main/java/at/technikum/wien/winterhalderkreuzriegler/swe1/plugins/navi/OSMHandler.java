@@ -8,6 +8,12 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * 
+ * Der OSMHandler wird vom SAX Parser benutzt. Es wird definiert auf welche start und endtags reagiert wird.
+ * Anschliessend wird eine Map mit allen Strassennamen befuellt.
+ *
+ */
 public class OSMHandler extends DefaultHandler {
 
 	private Map<String, List<String>> map;

@@ -6,6 +6,14 @@ import java.util.Map;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.StatusCode;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
 
+/**
+ * 
+ * Die HTTPResponse Klasse stellt einen HTTPResponse dar. Es werden alle relevanten Daten fuer den Response als Attribute 
+ * gehalten. Insbeondere der statusCode, contentLength, contentType. Die restlichen header werden als Map gespeichert und
+ * zur weiteren Verarbeitung als InputStream.
+ * 
+ *
+ */
 public class HTTPResponse implements Response {
 
 	private StatusCode statusCode;

@@ -5,6 +5,11 @@ import java.util.Map;
 
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.StatusCode;
 
+/**
+ * 
+ * Interface fuer die HTTPResponse Klasse
+ *
+ */
 public interface Response {
 
 	public StatusCode getStatusCode();

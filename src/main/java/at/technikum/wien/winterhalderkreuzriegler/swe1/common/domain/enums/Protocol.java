@@ -1,5 +1,10 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums;
 
+/**
+ * 
+ * Aufaehlung aller Unterstuetzten Protokolle
+ *
+ */
 public enum Protocol {
 	HTTP;
 	

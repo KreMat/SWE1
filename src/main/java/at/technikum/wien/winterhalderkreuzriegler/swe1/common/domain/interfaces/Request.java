@@ -1,10 +1,16 @@
 package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces;
 
+
 import java.io.InputStream;
 import java.util.Map;
 
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Method;
 
+/**
+ * 
+ * Interface fuer die HTTPRequest Klasse
+ *
+ */
 public interface Request {
 
 	public Method getMethod();

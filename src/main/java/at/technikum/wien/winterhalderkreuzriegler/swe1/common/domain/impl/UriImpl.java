@@ -6,6 +6,12 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Proto
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Version;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
 
+/**
+ * 
+ * UriImple stellt die Implementierung einer URI dar. Gespeichert werden der Port, das Protokoll, die Version, der Host,
+ * der Pfad und die uebergebenen Parameter.
+ *
+ */
 public class UriImpl implements Uri {
 
 	private int port;

@@ -12,6 +12,14 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.ResponseBuilder;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.StatusCode;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
 
+/**
+ * 
+ * Helferklasse fuer die Plugins. Es wird derzeit nur von dem Static Plugin genutzt.
+ * Es wird der Pfad zu der statischen HTML datei uebergeben. Diese wird geoeffnet und 
+ * ein Response Objekt wird erzeugt. Dieses Response Objekt wird anschliessend richtig befuellt
+ * und der Statuscode wird erzeugt und gesetzt.
+ *
+ */
 public class PluginHelper {
 
 	public static Response createFileResponse(String filePath) {

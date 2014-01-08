@@ -29,6 +29,14 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.helper.UriHelper;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Pluggable;
 
+/**
+ * 
+ * Dies ist die Implementierung des TemperaturPlugins. Das angezeigte Datum muss als Parameter uebergeben werden.
+ * Dies geht sowohl als POST sowie als GET. Wenn kein Datum uebergeben wird, wird das heutige Datum ausgewaehlt.
+ * Wenn an die URI /YYYY/MM/DD anfehaengt wird, wird von einer REST abfrage ausgegangen und die Daten werden als XML
+ * ausgegeben.
+ *
+ */
 public class TemperaturPlugin implements Pluggable {
 
 	private static final String TEXT_XML = "text/xml";
@@ -169,7 +177,7 @@ public class TemperaturPlugin implements Pluggable {
 					.newInstance(SensorWrapper.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
-			// für eine schöne Formatierung ;-)
+			// fuer eine schoene Formatierung ;-)
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
 			StringWriter writer = new StringWriter();
@@ -234,7 +242,7 @@ public class TemperaturPlugin implements Pluggable {
 				}
 
 			}, 0, 50000);
-			// Alle 50 Sekunden ausführen
+			// Alle 50 Sekunden ausfuehren
 		}
 
 	}

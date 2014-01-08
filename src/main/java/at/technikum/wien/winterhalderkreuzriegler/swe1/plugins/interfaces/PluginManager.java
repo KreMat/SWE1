@@ -9,7 +9,7 @@ public interface PluginManager {
 
 	/**
 	 * Anhand der {@link Uri} wird entschieden, welches Plugin (
-	 * {@link Pluggable}) geladen wird und eben dieses wird ausgeführt
+	 * {@link Pluggable}) geladen wird und eben dieses wird ausgefuehrt
 	 * 
 	 * @param uri
 	 *            {@link Uri} der Webanfrage

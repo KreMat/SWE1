@@ -25,7 +25,8 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.Cache;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Pluggable;
 
 /**
- * @author Matthias
+ * Das AdminPlugin ist das 'Eigene' Plugin. Es wird fuer die Verwaltung der anderen Plugins benutzt. Hier koennen
+ * die Plugins ein- und ausgeschaltet werden und die Konfiguration der Plugins kann veraendert werden.
  * 
  */
 public class AdminPlugin implements Pluggable {

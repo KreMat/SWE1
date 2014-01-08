@@ -12,6 +12,12 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
+/**
+ * 
+ * Der NaviHepler, diehnt als Hilfsklasse fuer das Navigationsplugin. Es wird ein SAX Parser erstellt und mittels des 
+ * OSMHandlers wird die Map mit den Strassennamen aufgebaut.
+ *
+ */
 public class NaviHelper {
 
 	public static Map<String, List<String>> parseOSM(File file) {

@@ -22,7 +22,7 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Plugin
 
 /**
  * 
- * Testklasse für {@link PluginManager}
+ * Testklasse fuer {@link PluginManager}
  * 
  * @author Matthias
  * 

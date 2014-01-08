@@ -6,6 +6,11 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums.Statu
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.impl.HTTPResponse;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
 
+/**
+ * 
+ * Der ResponseBuilder erstellt ein neues Response Objekt und setzt direkt den Uebergeben statuscode.
+ *
+ */
 public class ResponseBuilder {
 
 	public static Response buildResponse(StatusCode status) {

@@ -18,7 +18,7 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Plugga
 public class PluginLoader {
 
 	/**
-	 * Lädt alle konfigurierten Plugins aus dem plugin-Verzeichnis
+	 * Laedt alle konfigurierten Plugins aus dem plugin-Verzeichnis
 	 * 
 	 * 
 	 * @param pluginDir

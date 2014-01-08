@@ -14,7 +14,6 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Plugin
 /**
  * Implementierung des Interface {@link PluginManager}
  * 
- * @author Matthias
  * 
  */
 public class PluginManagerImpl implements PluginManager {

@@ -17,9 +17,9 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Plugga
  * Implementierung zum Interface {@link Pluggable}
  * 
  * Diese Plugin liefert statisch Files aus dem Filesystem des Servers an den
- * Aufrufer zurück
+ * Aufrufer zurueck. Die HTML Datein muessen sich in einem, in der Konfiguration bestimmten Ordner
+ * befinden.
  * 
- * @author Matthias
  * 
  */
 public class StaticPlugin implements Pluggable {

@@ -30,6 +30,16 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.impl.PluginManage
 import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Pluggable;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.PluginManager;
 
+/**
+ * 
+ * Dies ist die Implementierung des Webservers. Erst wird ein Socket geoeffnet der auf den vordefinierten Port hoert.
+ * Anschliessend wird auf eine Verbindung von einem client gewartet. Fragt ein Client an wird ein neuer Thread gestartet
+ * und diesen der neue Socket uebergeben. Anschliessend wird ein HTTPRequest und Uri Objekt erzeugt und geparse.
+ * Diese beiden Objekte werden dem PluginManager uebergeben, der diese anschliessend weiterverarbeitet und entscheidet
+ * welches Plugin geladen werden muss.  
+ * 
+ *
+ */
 public class Server {
 
 	private static final int PORT = 8089;
@@ -55,19 +65,19 @@ public class Server {
 			var = args[0].toUpperCase();
 		if (var == "C") {
 			// Liefert einen Thread-Pool, dem bei Bedarf neue Threads
-			// hinzugefügt
+			// hinzugefuegt
 			// werden. Vorrangig werden jedoch vorhandene freie Threads benutzt.
 			pool = Executors.newCachedThreadPool();
 			zusatz = "CachedThreadPool";
 		} else {
 			int poolSize = 10;
-			// Liefert einen Thread-Pool für maximal poolSize Threads
+			// Liefert einen Thread-Pool fuer maximal poolSize Threads
 			pool = Executors.newFixedThreadPool(poolSize);
 			zusatz = "poolsize=" + poolSize;
 		}
 		serverSocket = new ServerSocket(port);
 		// Thread zur Behandlung der Client-Server-Kommunikation, der Thread-
-		// Parameter liefert das Runnable-Interface (also die run-Methode für
+		// Parameter liefert das Runnable-Interface (also die run-Methode fuer
 		// t1).
 		Thread t1 = new Thread(new NetworkService(pool, serverSocket));
 		System.out.println("Start NetworkService(Multiplikation), " + zusatz
@@ -112,16 +122,16 @@ class NetworkService implements Runnable { // oder extends Thread
 			// Abbruch durch Strg+C oder Client-Anforderung 'Exit',
 			// dadurch wird der ServerSocket beendet, was hier zu einer
 			// IOException
-			// führt und damit zum Ende der run-Methode mit vorheriger
+			// fuehrt und damit zum Ende der run-Methode mit vorheriger
 			// Abarbeitung der
 			// finally-Klausel.
 			while (true) {
 				/*
-				 * Zunächst wird eine Client-Anforderung
+				 * Zunaechst wird eine Client-Anforderung
 				 * entgegengenommen(accept-Methode). Der ExecutorService pool
 				 * liefert einen Thread, dessen run-Methode durch die
 				 * run-Methode der Handler-Instanz realisiert wird. Dem Handler
-				 * werden als Parameter übergeben: der ServerSocket und der
+				 * werden als Parameter uebergeben: der ServerSocket und der
 				 * Socket des anfordernden Clients.
 				 */
 				Socket cs = serverSocket.accept(); // warten auf
@@ -257,7 +267,7 @@ class Handler implements Runnable { // oder 'extends Thread'
 			}
 
 		} finally {
-			// out.println(response); // Rückgabe Ergebnis an den Client
+			// out.println(response); // Rueckgabe Ergebnis an den Client
 			if (!client.isClosed()) {
 				System.out.println("****** Handler:Client close");
 				try {
