@@ -16,6 +16,7 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Response;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.Uri;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.helper.TestHelper;
+import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.Cache;
 
 /**
  * @author Matthias
@@ -31,12 +32,13 @@ public class StaticPluginTest extends Assert {
 	public void setUp() {
 		staticPlugin = new StaticPlugin();
 		helper = new TestHelper();
+		Cache.refreshCache();
 	}
 
 	@Test
 	public void testRequest() throws IOException {
 		Uri uri = helper.createDefaultUri();
-		uri.setPath("/static/index.html");
+		uri.setPath("static/index.html");
 		Request request = helper.createDefaultRequest();
 		Response response = staticPlugin.request(uri, request);
 		assertNotNull(response);

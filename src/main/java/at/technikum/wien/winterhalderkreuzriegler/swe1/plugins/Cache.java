@@ -20,10 +20,13 @@ public class Cache {
 	static {
 		plugins = new HashMap<String, Pluggable>();
 		properties = new Properties();
-		refreshCache();
 	}
 
 	private static void refreshPluginCache() {
+		// Plugins beenden
+		for (Entry<String, Pluggable> entry : Cache.plugins.entrySet()) {
+			entry.getValue().stop();
+		}
 		String pluginDirPath = properties.getProperty(
 				WebserverConstants.PLUGIN_DIR_KEY,
 				WebserverConstants.DEFAULT_PLUGIN_DIR_PATH);
@@ -45,6 +48,10 @@ public class Cache {
 		}
 		Cache.plugins.clear();
 		Cache.plugins.putAll(loadedPlugins);
+		// Plugins starten
+		for (Entry<String, Pluggable> entry : Cache.plugins.entrySet()) {
+			entry.getValue().start();
+		}
 	}
 
 	private static void refreshProperties() {

@@ -3,24 +3,28 @@ package at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.enums;
 /**
  * 
  * Aufaehlung aller Fehlercodes
- *
+ * 
  */
 
 public enum StatusCode {
-	STATUS_404(404, false), STATUS_200(200, true), STATUS_500(500,false);
+	STATUS_404(404, "Not Found"), STATUS_200(200, "OK"), STATUS_500(500,
+			"Internal Server Error");
 
 	/**
 	 * 
-	 * @param code nimmt den Fehlercode als INT entgegen und waehlt den richtigen emum aus.
-	 * @param ok status des aufrufes
+	 * @param code
+	 *            nimmt den Fehlercode als INT entgegen und waehlt den richtigen
+	 *            emum aus.
+	 * @param ok
+	 *            status des aufrufes
 	 */
-	private StatusCode(int code, boolean ok) {
+	private StatusCode(int code, String text) {
 		this.code = code;
-		this.ok = ok;
+		this.text = text;
 	}
 
 	private int code;
-	private boolean ok;
+	private String text;
 
 	/**
 	 * 
@@ -29,13 +33,13 @@ public enum StatusCode {
 	public int getCode() {
 		return code;
 	}
-	
+
 	/**
 	 * 
-	 * @return gibt TRUE zurueck die Seite gefunden wurde und ob der Status Ok ist, andersfalls wird FALSE zurueckgegeben
+	 * @return Gibt den Text des Statuscodes zurueck
 	 */
-	public boolean getOk(){
-		return ok;
+	public String getText() {
+		return text;
 	}
 
 }

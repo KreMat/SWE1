@@ -50,12 +50,8 @@ public class Server {
 	 */
 	public static void main(String[] args) throws IOException {
 
-		// Cache.refreshCache();
-		//
-		// Plugins starten
-		for (Entry<String, Pluggable> entry : Cache.plugins.entrySet()) {
-			entry.getValue().start();
-		}
+		// Plugins das erste mal laden und Starten
+		Cache.refreshCache();
 
 		final ExecutorService pool;
 		final ServerSocket serverSocket;
@@ -285,7 +281,7 @@ class Handler implements Runnable { // oder 'extends Thread'
 		out.println(uri.getProtocol().name() + "/"
 				+ uri.getVersion().getVersion() + " "
 				+ response.getStatusCode().getCode() + " "
-				+ ((response.getStatusCode().getOk()) ? "OK" : "NOK"));
+				+ response.getStatusCode().getText());
 
 		out.println("Content-Type: " + response.getContentType());
 		out.println("Content-Length: " + response.getContentLength());

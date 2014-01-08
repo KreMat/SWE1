@@ -52,4 +52,34 @@ public class PluginManagerTest extends Assert {
 		assertNotNull(response);
 		assertEquals(StatusCode.STATUS_200, response.getStatusCode());
 	}
+
+	@Test
+	public void testExecuteRequestStatic() {
+		Uri uri = helper.createUri("localhost", "/static/index.html",
+				WebserverConstants.PORT, Protocol.HTTP,
+				new HashMap<String, String>());
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Content-Language", "de");
+		Request request = helper.createRequest(null, 0l, "text/html", headers,
+				Method.GET);
+		Response response = pluginManager.excecuteRequest(uri, request);
+		assertNotNull(response);
+		assertEquals(StatusCode.STATUS_200, response.getStatusCode());
+		assertEquals("text/html", response.getContentType());
+	}
+
+	@Test
+	public void testExecuteRequestTemp() {
+		Uri uri = helper.createUri("localhost", "/GetTemperature/2012/10/1",
+				WebserverConstants.PORT, Protocol.HTTP,
+				new HashMap<String, String>());
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Content-Language", "de");
+		Request request = helper.createRequest(null, 0l, "text/html", headers,
+				Method.GET);
+		Response response = pluginManager.excecuteRequest(uri, request);
+		assertNotNull(response);
+		assertEquals(StatusCode.STATUS_200, response.getStatusCode());
+		assertEquals("text/xml", response.getContentType());
+	}
 }

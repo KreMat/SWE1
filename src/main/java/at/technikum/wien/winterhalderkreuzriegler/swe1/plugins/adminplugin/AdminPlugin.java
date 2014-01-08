@@ -25,8 +25,9 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.Cache;
 import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Pluggable;
 
 /**
- * Das AdminPlugin ist das 'Eigene' Plugin. Es wird fuer die Verwaltung der anderen Plugins benutzt. Hier koennen
- * die Plugins ein- und ausgeschaltet werden und die Konfiguration der Plugins kann veraendert werden.
+ * Das AdminPlugin ist das 'Eigene' Plugin. Es wird fuer die Verwaltung der
+ * anderen Plugins benutzt. Hier koennen die Plugins ein- und ausgeschaltet
+ * werden und die Konfiguration der Plugins kann veraendert werden.
  * 
  */
 public class AdminPlugin implements Pluggable {
@@ -36,7 +37,7 @@ public class AdminPlugin implements Pluggable {
 		String path = UriHelper.convertPath(uri.getPath());
 		if ("".equals(path) || "index.html".equals(path)) {
 			return createIndexResponse();
-		} else if ("/change".equals(path)) {
+		} else if ("change".equals(path)) {
 			return change(request);
 		}
 		return ResponseBuilder.buildResponse(StatusCode.STATUS_404);
@@ -62,15 +63,7 @@ public class AdminPlugin implements Pluggable {
 			fop.flush();
 			fop.close();
 
-			// Plugins beenden
-			for (Entry<String, Pluggable> entry : Cache.plugins.entrySet()) {
-				entry.getValue().stop();
-			}
 			Cache.refreshCache();
-			// Plugins starten
-			for (Entry<String, Pluggable> entry : Cache.plugins.entrySet()) {
-				entry.getValue().start();
-			}
 
 		} catch (IOException e) {
 			throw new IllegalStateException(e);
