@@ -70,7 +70,7 @@ public class NaviPlugin implements Pluggable {
 	private Response answerReloadStreetMap() {
 		Response r = ResponseBuilder.buildResponse(StatusCode.STATUS_200);
 		StringBuilder body = new StringBuilder();
-		body.append("<h3>Die Karte wird neu eingelesen. W&auml;rend dieser Zeit werden keine Anfragen beantwortet!</h3>");
+		body.append("<h3>Die Karte wird neu eingelesen. W&auml;hrend dieser Zeit werden keine Anfragen beantwortet!</h3>");
 		r.setBody(new ByteArrayInputStream(body.toString().getBytes()));
 		r.setContentLength(body.length());
 		r.setContentType("text/html");
@@ -130,7 +130,7 @@ public class NaviPlugin implements Pluggable {
 
 	@Override
 	public void start() {
-		// loadStreetMap();
+		loadStreetMap();
 	}
 
 	private void loadStreetMap() {
@@ -142,7 +142,7 @@ public class NaviPlugin implements Pluggable {
 				streetMap = NaviHelper.parseOSM(new File(Cache.properties
 						.getProperty(OSM_PATH, DEFAULT_OSM_PATH)));
 				System.out.println("Einlesezeit: "
-						+ (System.currentTimeMillis() - startTime) / 1000);
+						+ (System.currentTimeMillis() - startTime) / 1000 + "s");
 				isBlocked = false;
 				System.out.println("StreetMap fertig eingelesen!");
 			}
