@@ -32,6 +32,8 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.plugins.interfaces.Plugin
 
 public class Server {
 
+	private static final int PORT = 8089;
+
 	/**
 	 * @param args
 	 */
@@ -46,7 +48,7 @@ public class Server {
 
 		final ExecutorService pool;
 		final ServerSocket serverSocket;
-		int port = 8088;
+		int port = PORT;
 		String var = "C";
 		String zusatz;
 		if (args.length > 0)

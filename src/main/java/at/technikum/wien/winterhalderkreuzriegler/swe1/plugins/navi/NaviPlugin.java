@@ -25,7 +25,7 @@ public class NaviPlugin implements Pluggable {
 	private static final String TRUE = "true";
 	private static final String STREET_KEY = "street";
 	private static final String REFRESH_MAP = "refreshMap";
-	protected static final String OSM_PATH = "osmPath";
+	protected static final String OSM_PATH_KEY = "osmPath";
 	protected static final String DEFAULT_OSM_PATH = "D:/austria-latest.osm";
 	private Map<String, List<String>> streetMap = new HashMap<String, List<String>>();
 	private boolean isBlocked = false;
@@ -140,7 +140,7 @@ public class NaviPlugin implements Pluggable {
 				isBlocked = true;
 				long startTime = System.currentTimeMillis();
 				streetMap = NaviHelper.parseOSM(new File(Cache.properties
-						.getProperty(OSM_PATH, DEFAULT_OSM_PATH)));
+						.getProperty(OSM_PATH_KEY, DEFAULT_OSM_PATH)));
 				System.out.println("Einlesezeit: "
 						+ (System.currentTimeMillis() - startTime) / 1000 + "s");
 				isBlocked = false;
