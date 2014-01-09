@@ -27,10 +27,21 @@ public class UriHelper {
 				.substring(path.indexOf('/') + 1);
 	}
 
+	/**
+	 * 
+	 * @param path der Pfad als String z.B.: /static/index.html
+	 * @return Es wird ein String[] zuruegegeben das alle teile des Pfades enthaelt die mit einem "/" geteilt wurden.
+	 */
 	public static String[] splitPath(String path) {
 		return path.replace(" ", "").split("/");
 	}
 
+	/**
+	 * 
+	 * @param params alle Parameter ohne dem "?" z.B.: wert1=value1&wert2=value2....
+	 * @return gibt eine Map zurueck dessen Key der Parametername und Value der Werte ist. 
+	 * Wurde ein Leerstring uebergeben, wird eine leere Map retuniert.
+	 */
 	public static Map<String, String> getParamValue(String params) {
 		if (params == null || params.length() == 0) {
 			return new HashMap<String, String>();

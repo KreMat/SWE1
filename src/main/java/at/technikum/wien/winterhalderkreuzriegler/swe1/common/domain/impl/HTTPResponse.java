@@ -10,7 +10,7 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.
  * 
  * Die HTTPResponse Klasse stellt einen HTTPResponse dar. Es werden alle relevanten Daten fuer den Response als Attribute 
  * gehalten. Insbeondere der statusCode, contentLength, contentType. Die restlichen header werden als Map gespeichert und
- * zur weiteren Verarbeitung als InputStream.
+ * zur weiteren Verarbeitung als InputStream. Diese Klasse ist eine reine Datenhalter Klasse.
  * 
  *
  */

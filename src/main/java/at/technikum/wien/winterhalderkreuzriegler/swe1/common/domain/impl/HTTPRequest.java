@@ -12,7 +12,7 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.
  * Die HTTPRequest Klasse stellt einen HTTP aufruf da. Es werden alle wichtigen Information eines Requests gespeichert.
  * Es wird die Methode, der ContentType, die ContentLenth als Attribut gespeichert. Alles weiteren Headerinformation werden
  * in der Headers Map gespeichert. Der Body wird direkt als InputStream gespeichert, somit kann spaeter noch, je nach Plugin
- * entschieden werden wie die Daten ausgelesen werden.
+ * entschieden werden wie die Daten ausgelesen werden. Diese Klasse ist eine reine Datenhalterklasse.
  *
  */
 public class HTTPRequest implements Request {

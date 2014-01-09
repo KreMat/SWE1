@@ -13,6 +13,11 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.
  */
 public class ResponseBuilder {
 
+	/**
+	 * 
+	 * @param status statuscode des zu erstellenden HTTPResponse
+	 * @return Gibt ein Response Objekt 
+	 */
 	public static Response buildResponse(StatusCode status) {
 		Response r = new HTTPResponse();
 		r.setHeaders(new HashMap<String, String>());

@@ -9,7 +9,7 @@ import at.technikum.wien.winterhalderkreuzriegler.swe1.common.domain.interfaces.
 /**
  * 
  * UriImple stellt die Implementierung einer URI dar. Gespeichert werden der Port, das Protokoll, die Version, der Host,
- * der Pfad und die uebergebenen Parameter.
+ * der Pfad und die uebergebenen Parameter. Diese Klasse ist eine reine Datenhalter Klasse.
  *
  */
 public class UriImpl implements Uri {
