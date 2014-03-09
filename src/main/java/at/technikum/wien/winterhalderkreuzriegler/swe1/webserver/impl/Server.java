@@ -255,6 +255,7 @@ class Handler implements Runnable { // oder 'extends Thread'
 		} catch (IOException e) {
 			System.out.println("IOException, Handler-run");
 		} catch (Exception e) {
+			e.printStackTrace();
 			Response r = ResponseBuilder.buildResponse(StatusCode.STATUS_500);
 			Uri uriEmpty = new UriImpl(0, Protocol.HTTP, Version.V1_1, "NOHOST");
 			try {
