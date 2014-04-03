@@ -63,7 +63,7 @@ public class HTTPRequest implements Request {
 	}
 
 	@Override
-	public void setContentLength(Long length) {
+	public void setContentLength(long length) {
 		this.contentLength = length;
 	}
 

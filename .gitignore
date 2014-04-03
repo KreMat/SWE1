@@ -10,3 +10,7 @@
 /bin
 
 /target
+/httpclient-4.3.3.jar
+/httpclient-cache-4.3.3.jar
+/httpcore-4.3.2.jar
+/httpmime-4.3.3.jar

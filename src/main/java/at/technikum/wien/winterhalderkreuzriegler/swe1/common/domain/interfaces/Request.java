@@ -27,7 +27,7 @@ public interface Request {
 
 	public Long getContentLength();
 
-	public void setContentLength(Long length);
+	public void setContentLength(long length);
 
 	public InputStream getBody();
 
