@@ -235,7 +235,11 @@ class Handler implements Runnable { // oder 'extends Thread'
 						if (headerArgs[0].equals("Host")) {
 							String[] splittedHost = headerArgs[1].split(":");
 							host = splittedHost[0];
-							port = Integer.parseInt(splittedHost[1]);
+							if (splittedHost.length == 1) {
+								port = 80;
+							} else {
+								port = Integer.parseInt(splittedHost[1]);
+							}
 						}
 					}
 				}
